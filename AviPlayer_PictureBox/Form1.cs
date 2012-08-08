@@ -44,9 +44,7 @@ namespace AviPlayer_PictureBox {
                 myTimer.Interval = 1000 / Convert.ToInt32(movieInfo.fps);
                 myTimer.Tick += new EventHandler(MyTimer_Tick);
 
-                if (MovieHandlers != null) {
-                    MovieHandlers(this, new MovieEvent(MovieEvent.State.NewMovie));
-                }
+                MovieHandlers(this, new MovieEvent(MovieEvent.State.NewMovie));
 
                 myTimer.Start();
             }
@@ -57,24 +55,18 @@ namespace AviPlayer_PictureBox {
             if (p >= movieInfo.frameCount) {
                 myTimer.Stop();
                 renderFrame(0);
-                if (MovieHandlers != null) {
-                    MovieHandlers(this, new MovieEvent(MovieEvent.State.Stopped));
-                }
+                MovieHandlers(this, new MovieEvent(MovieEvent.State.Stopped));
                 return;
             }
             renderFrame(p);
-            if (MovieHandlers != null) {
-                MovieHandlers(this, new MovieEvent(MovieEvent.State.Playing));
-            }
+            MovieHandlers(this, new MovieEvent(MovieEvent.State.Playing));
         }
 
         private void button3_Click(object sender, EventArgs e) {
             if (myTimer == null) return;
             myTimer.Stop();
             renderFrame(0);
-            if (MovieHandlers != null) {
-                MovieHandlers(this, new MovieEvent(MovieEvent.State.Stopped));
-            }
+            MovieHandlers(this, new MovieEvent(MovieEvent.State.Stopped));
         }
 
         private void renderFrame(int p) {
@@ -100,7 +92,6 @@ namespace AviPlayer_PictureBox {
             public int height;
             public int currentFrame;
             public int fps;
-            public bool playing;
             public MovieInfo(String filename, IntPtr capture) {
                 this.filename = filename;
                 this.frameCount = Convert.ToInt32(CvInvoke.cvGetCaptureProperty(capture, Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_FRAME_COUNT));
@@ -108,7 +99,6 @@ namespace AviPlayer_PictureBox {
                 this.height = Convert.ToInt32(CvInvoke.cvGetCaptureProperty(capture, Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_FRAME_HEIGHT));
                 this.currentFrame = Convert.ToInt32(CvInvoke.cvGetCaptureProperty(capture, Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_POS_FRAMES));
                 this.fps = Convert.ToInt32(CvInvoke.cvGetCaptureProperty(capture, Emgu.CV.CvEnum.CAP_PROP.CV_CAP_PROP_FPS));
-                this.playing = false;
             }
         }
 
@@ -136,16 +126,12 @@ namespace AviPlayer_PictureBox {
 
         private void button4_Click(object sender, EventArgs e) {
             renderFrame(movieInfo.currentFrame - 1);
-            if (MovieHandlers != null) {
-                MovieHandlers(this, new MovieEvent(MovieEvent.State.PrevNext));
-            }
+            MovieHandlers(this, new MovieEvent(MovieEvent.State.PrevNext));
         }
 
         private void button5_Click(object sender, EventArgs e) {
             renderFrame(movieInfo.currentFrame + 1);
-            if (MovieHandlers != null) {
-                MovieHandlers(this, new MovieEvent(MovieEvent.State.PrevNext));
-            }
+            MovieHandlers(this, new MovieEvent(MovieEvent.State.PrevNext));
         }
 
         private void handler(object sender, MovieEvent e) {
@@ -206,9 +192,7 @@ namespace AviPlayer_PictureBox {
 
         private void trackBar_Scroll(object sender, EventArgs e) {
             renderFrame((sender as TrackBar).Value);
-            if (this.MovieHandlers != null) {
-                MovieHandlers(this, new MovieEvent(MovieEvent.State.Scroll));
-            }
+            MovieHandlers(this, new MovieEvent(MovieEvent.State.Scroll));
         }
 
     }
