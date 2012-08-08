@@ -29,7 +29,7 @@ namespace AviPlayer_PictureBox {
 
         private void button1_Click(object sender, EventArgs e) {
             var dialog = new OpenFileDialog();
-            dialog.Filter = "视频(*.avi)|*.avi";
+            dialog.Filter = "视频文件|*.avi;*.rmvb;*.rm";
             if (dialog.ShowDialog() == DialogResult.OK) {
                 var file = dialog.FileName;
                 capture = CvInvoke.cvCreateFileCapture(file);
